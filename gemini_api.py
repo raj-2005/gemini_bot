@@ -1,13 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 import streamlit as st
 import requests
 
 # Function to get response from Gemini API
 def get_gemini_response(query):
-    api_key = "AIzaSyCm2k__h6OqV0SwywgVW6YyYlGWX2zk4Xw"  # Replace with your Gemini API key
-    endpoint = "https://generativelanguage.googleapis.com/v1beta/models/MODELNAME:generateContent"  # Use the correct endpoint for Gemini API
+    api_key = "YOUR_API_KEY"  # Replace with your actual Gemini API key
+    endpoint = "https://generativelanguage.googleapis.com/v1beta/models/text-bison:generateText"  # Suggested endpoint
 
     headers = {
         "Authorization": f"Bearer {api_key}",  # Use the correct variable for the API key
@@ -15,13 +12,17 @@ def get_gemini_response(query):
     }
 
     payload = {
-        "query": query
+        "prompt": query,
+        "temperature": 0.5,
+        "maxOutputTokens": 256,
+        "topP": 0.8,
+        "topK": 40,
     }
 
     response = requests.post(endpoint, headers=headers, json=payload)
 
     if response.status_code == 200:
-        return response.json().get('response', 'Sorry, I could not understand that.')
+        return response.json().get('candidates', [{}])[0].get('text', 'Sorry, I could not understand that.')
     else:
         return "Error: " + response.text
 
@@ -40,8 +41,3 @@ if st.button("Get Answer"):
         st.text_area("Chatbot Response:", answer, height=200)
     else:
         st.warning("Please enter a question to get an answer.")
-
-
-
-
-
