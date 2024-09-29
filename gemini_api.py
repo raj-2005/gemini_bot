@@ -1,28 +1,18 @@
 import streamlit as st
 import requests
 
-# Function to get response from Gemini API
+# Function to get response from your edge function
 def get_gemini_response(query):
-    api_key = "YOUR_API_KEY"  # Replace with your actual Gemini API key
-    endpoint = "https://generativelanguage.googleapis.com/v1beta/models/text-bison:generateText"  # Suggested endpoint
-
-    headers = {
-        "Authorization": f"Bearer {api_key}",  # Use the correct variable for the API key
-        "Content-Type": "application/json"
-    }
+    endpoint = "YOUR_EDGE_FUNCTION_URL"  # Replace with your edge function URL
 
     payload = {
-        "prompt": query,
-        "temperature": 0.5,
-        "maxOutputTokens": 256,
-        "topP": 0.8,
-        "topK": 40,
+        "query": query
     }
 
-    response = requests.post(endpoint, headers=headers, json=payload)
+    response = requests.post(endpoint, json=payload)
 
     if response.status_code == 200:
-        return response.json().get('candidates', [{}])[0].get('text', 'Sorry, I could not understand that.')
+        return response.json().get('response', 'Sorry, I could not understand that.')
     else:
         return "Error: " + response.text
 
@@ -36,7 +26,7 @@ user_input = st.text_input("Type your question here:")
 
 if st.button("Get Answer"):
     if user_input:
-        # Get the response from Gemini
+        # Get the response from your edge function
         answer = get_gemini_response(user_input)
         st.text_area("Chatbot Response:", answer, height=200)
     else:
