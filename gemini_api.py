@@ -7,7 +7,7 @@ import requests
 # Function to get response from Gemini API
 def get_gemini_response(query):
     api_key = "AIzaSyCm2k__h6OqV0SwywgVW6YyYlGWX2zk4Xw"  # Replace with your Gemini API key
-    endpoint = "https://api.gemini.com/v1/chat"  # Use the correct endpoint for Gemini API
+    endpoint = "https://generativelanguage.googleapis.com/v1beta/models/MODELNAME:generateContent"  # Use the correct endpoint for Gemini API
 
     headers = {
         "Authorization": f"Bearer {api_key}",  # Use the correct variable for the API key
