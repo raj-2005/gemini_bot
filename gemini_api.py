@@ -1,15 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import streamlit as st
 import requests
-
-
-# In[2]:
-
 
 # Function to get response from Gemini API
 def get_gemini_response(query):
@@ -17,7 +10,7 @@ def get_gemini_response(query):
     endpoint = "https://api.gemini.com/v1/chat"  # Use the correct endpoint for Gemini API
 
     headers = {
-        "Authorization": f"Bearer {AIzaSyCm2k__h6OqV0SwywgVW6YyYlGWX2zk4Xw}",
+        "Authorization": f"Bearer {api_key}",  # Use the correct variable for the API key
         "Content-Type": "application/json"
     }
 
@@ -33,23 +26,12 @@ def get_gemini_response(query):
         return "Error: " + response.text
 
 
-# In[3]:
-
-
 # Streamlit app layout
 st.title("Patient Query Chatbot")
-
-
-# In[4]:
-
 
 # Chat interface
 st.subheader("Ask your questions about skin health:")
 user_input = st.text_input("Type your question here:")
-
-
-# In[5]:
-
 
 if st.button("Get Answer"):
     if user_input:
@@ -59,8 +41,6 @@ if st.button("Get Answer"):
     else:
         st.warning("Please enter a question to get an answer.")
 
-
-# In[ ]:
 
 
 
